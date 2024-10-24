@@ -4,28 +4,24 @@ interface Pokemon {
   }
 
   interface NavBarProps {
-    pokemonIndex: number;
+    currentIndex: number;
     setPokemonIndex: (index: number) => void;
     pokemonList: Pokemon[];
 }
 
-function NavBar({pokemonIndex, setPokemonIndex, pokemonList}: NavBarProps) {
-    const handlePrecedent = () => {
-        setPokemonIndex(pokemonIndex - 1)
-  };
-
-    const handleSuivant = () => {
-        setPokemonIndex(pokemonIndex + 1)
-  };
-
+function NavBar({currentIndex, setPokemonIndex, pokemonList}: NavBarProps) {
+    
     return (
         <div>
-    {pokemonIndex > 0 && (
-        <button type="button" onClick={handlePrecedent}>Précédent</button>
-    )}
-    {pokemonIndex < pokemonList.length - 1 && (
-        <button type="button" onClick={handleSuivant}>Suivant</button>
-    )}
+           {pokemonList.map((pokemon, index) => (
+        <button type="button"
+          key={pokemon.name} 
+          onClick={() => setPokemonIndex(index)}
+          disabled={index === currentIndex}
+        >
+          {pokemon.name}
+        </button>
+      ))}
     </div>
 );
 }
